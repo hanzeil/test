@@ -1,0 +1,9 @@
+<html>
+	<body>
+		<?php
+		include 'ConnectDB.php';
+		$db=new ConnectDB();
+		$cursor= $db->findFromColl('userInfo','name');
+		?>
+	</body>
+</html>
