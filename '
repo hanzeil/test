@@ -1,0 +1,23 @@
+<html>
+	<body>
+		<?php
+		include 'ConnectDB.php';
+		$db=new ConnectDB();
+		$str_coll='userInfo';
+		$key='name';
+		$cursor= $db->findFromColl($str_coll,$key);
+		$rs=$cursor->getNext();
+		?>
+		<div>
+			<?php 
+			echo "user:","   "
+			foreach($cursor as $key=>$value){
+				echo value[$key]
+			}
+			?>
+		</div>
+		<div>
+			sex:<?php ?>
+		</div>
+	</body>
+</html>
