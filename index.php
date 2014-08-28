@@ -13,6 +13,7 @@
 			<tr>
 				<th>Name</th>
 				<th>Sex</th>
+				<th>Change</th>
 			</tr>
 		<?php 
 			$rs1=$cursor1->getNext();
@@ -27,8 +28,11 @@
 				echo $rs2[$key2];
 				$rs2=$cursor2->getNext();
 				echo '</th>';
+				echo '<th herf="ChangeDB.php">Change</th>';
 				echo '</tr>';
 			}
+			unset($cursor1);
+			unset($cursor2);
 		?>
 		</table>
 	</body>
