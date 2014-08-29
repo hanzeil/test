@@ -2,37 +2,37 @@
 	<body>
 		<?php
 		include 'ConnectDB.php';
-		$db=new ConnectDB();
-		$str_coll='userInfo';
-		$key1='name';
-		$key2='sex';
-		$cursor1= $db->findFromColl($str_coll,$key1);
-		$cursor2= $db->findFromColl($str_coll,$key2);
+		include 'Coll_userInfo.php';
+		$str_coll=Coll_userInfo::COLL;
+		$primary_key=Coll_userInfo::PRIMARY_KEY;
+		$key=Coll_userInfo::$KEY;
+		$db=new ConnectDB($str_coll);
+		$cursor= $db->findFromColl($key);
 		?>
 		<table border="1">
 			<tr>
-				<th>Name</th>
-				<th>Sex</th>
+				<?php 
+					foreach($key as $keytmp){
+						echo "<th>$keytmp</th>";
+					}
+				?>
 				<th>Change</th>
 			</tr>
 		<?php 
-			$rs1=$cursor1->getNext();
-			$rs2=$cursor2->getNext();
-			while($rs1){
+			$rs=$cursor->getNext();
+			while($rs){
+				echo '<form action="ChangeDB.php" method="post">';
+				echo "<input type=hidden name=PRIMARY_KEY size=6 value=$rs[$primary_key] />";
 				echo '<tr>';
-				echo '<th>';
-				echo $rs1[$key1];
-				$rs1=$cursor1->getNext();
-				echo '</th>';
-				echo '<th>';
-				echo $rs2[$key2];
-				$rs2=$cursor2->getNext();
-				echo '</th>';
-				echo '<th herf="ChangeDB.php">Change</th>';
+				foreach($key as $keytmp){
+					echo "<th><input type=text name=$keytmp size=6 value=$rs[$keytmp] ></th>";
+				}
+				echo '<th> <input type="submit" value=Change /></th>';
 				echo '</tr>';
+				$rs=$cursor->getNext();
+				echo '</form>';
 			}
-			unset($cursor1);
-			unset($cursor2);
+			unset($db);
 		?>
 		</table>
 	</body>
